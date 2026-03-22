@@ -1,2 +1,27 @@
+# Node
 node_modules
-./server-backend/node_modules
+npm-debug.log
+yarn-error.log
+
+# Build files
+dist
+build
+
+# Env files
+.env
+.env.*.local
+
+# Logs
+logs
+*.log
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode
+.idea
+
+# Nested backend (important)
+server-backend/node_modules
+server-backend/dist

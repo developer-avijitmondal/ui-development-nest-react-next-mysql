@@ -1,7 +1,10 @@
 {
-  "name": "react-login",
+ "name": "react-login",
+  "version": "0.0.1",
+  "description": "React frontend for login and register using NestJS backend",
+  "author": "Avijit",
   "private": true,
-  "version": "0.0.0",
+  "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -51,38 +51,37 @@ const user_entity_1 = require("./user.entity");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
     userRepo;
-    constructor(userRepo) {
+    jwtService;
+    constructor(userRepo, jwtService) {
         this.userRepo = userRepo;
+        this.jwtService = jwtService;
     }
     async register(dto) {
         const { email, password } = dto;
         const exist = await this.userRepo.findOne({ where: { email } });
-        if (exist) {
+        if (exist)
             throw new common_1.BadRequestException('User already exists');
-        }
         const hashed = await bcrypt.hash(password, 10);
-        const user = this.userRepo.create({
-            email,
-            password: hashed,
-        });
+        const user = this.userRepo.create({ email, password: hashed });
         await this.userRepo.save(user);
         return { message: 'Registered successfully' };
     }
     async login(dto) {
         const { email, password } = dto;
         const user = await this.userRepo.findOne({ where: { email } });
-        if (!user) {
+        if (!user)
             throw new common_1.BadRequestException('User not found');
-        }
         const match = await bcrypt.compare(password, user.password);
-        if (!match) {
+        if (!match)
             throw new common_1.BadRequestException('Wrong password');
-        }
+        const payload = { userId: user.id, email: user.email };
+        const token = this.jwtService.sign(payload);
         return {
             message: 'Login successful',
-            userId: user.id,
+            access_token: token,
         };
     }
 };
@@ -90,6 +89,7 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_2.InjectRepository)(user_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_1.Repository])
+    __metadata("design:paramtypes", [typeorm_1.Repository,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map
