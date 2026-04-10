@@ -16,6 +16,7 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const passport_1 = require("@nestjs/passport");
+const swagger_1 = require("@nestjs/swagger");
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -37,6 +38,15 @@ let AuthController = class AuthController {
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('register'),
+    (0, swagger_1.ApiOperation)({ summary: 'Register user' }),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            example: {
+                email: 'test@test.com',
+                password: '123456'
+            }
+        }
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -44,6 +54,15 @@ __decorate([
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('login'),
+    (0, swagger_1.ApiOperation)({ summary: 'Login user' }),
+    (0, swagger_1.ApiBody)({
+        schema: {
+            example: {
+                email: 'test@test.com',
+                password: '123456'
+            }
+        }
+    }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -51,6 +70,8 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.Get)('profile'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get user profile (Protected)' }),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -58,6 +79,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "getProfile", null);
 exports.AuthController = AuthController = __decorate([
+    (0, swagger_1.ApiTags)('Auth'),
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);

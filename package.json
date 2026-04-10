@@ -1,5 +1,5 @@
 {
- "name": "react-login",
+  "name": "react-login",
   "version": "0.0.1",
   "description": "React frontend for login and register using NestJS backend",
   "author": "Avijit",
@@ -13,8 +13,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "5.3.8",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
